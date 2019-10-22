@@ -15,7 +15,7 @@ class MyStorage {
   get(key) {
     const prefixKey = this.prefix + key;
     let data = this.storage.getItem(prefixKey);
-    if (!data){
+    if (!data) {
       return false;
     }
     data = JSON.parse(data);
