@@ -14,8 +14,8 @@ const Sort = {
   update: function(id, params) {
     return request.put(API.sortItem(id), params);
   },
-  all: function() {
-    return request.get(API.sortAll);
+  delete: function(id) {
+    return request.delete(API.sortItem(id));
   }
 };
 

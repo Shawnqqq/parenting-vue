@@ -91,11 +91,12 @@ export default {
           managerService.login(data).then(res => {
             if (res.code !== 200) {
               this.$message.error(res.message);
-            }else{
+            } else {
               DataStore.setToken(res.token);
-              this.$router.replace({name: "manager"});
+              DataStore.setName(res.name);
+              this.$router.replace({ name: "manager" });
             }
-          })
+          });
         }
       });
     }

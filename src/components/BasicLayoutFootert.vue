@@ -5,16 +5,14 @@
 </template>
 
 <script>
-export default {
-  
-}
+export default {};
 </script>
 
 <style lang="less" scoped>
-  .footer-section{
-    text-align:center;
-    font-size: 12px;
-    line-height: 40px;
-    opacity: 0.4;
-  }
+.footer-section {
+  text-align: center;
+  font-size: 12px;
+  line-height: 40px;
+  opacity: 0.4;
+}
 </style>

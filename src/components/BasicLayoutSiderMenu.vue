@@ -70,7 +70,7 @@ export default {
     filterNavigator(node) {
       let result = [];
       node.forEach(data => {
-        if (data.meta && data.meta.nav){
+        if (data.meta && data.meta.nav) {
           let item = {
             path: data.path,
             name: data.name,

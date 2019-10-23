@@ -18,13 +18,13 @@ import Header from "./BasicLayoutHeader";
 import Footer from "./BasicLayoutFootert";
 import Sider from "./BasicLayoutSider";
 
-export default{
-  data(){
-    return{
+export default {
+  data() {
+    return {
       collapse: false
     };
   },
-  components:{
+  components: {
     Header,
     Footer,
     Sider
@@ -32,9 +32,9 @@ export default{
 };
 </script>
 
-<style lang='less'>
-.page-wrapper{
-  height:100vh;
+<style lang="less">
+.page-wrapper {
+  height: 100vh;
   display: flex;
   box-sizing: border-box;
   .page-header {
@@ -42,19 +42,19 @@ export default{
     z-index: 10;
     height: 64px;
   }
-  .page-sider{
+  .page-sider {
     position: relative;
   }
-  .page-mainer{
+  .page-mainer {
     display: flex;
     flex-direction: column;
     background-color: #faf8f8;
     width: 100%;
-    padding:0px;
-    .page-header{
+    padding: 0px;
+    .page-header {
       height: 64px !important;
     }
-    .page-body{
+    .page-body {
       flex: 1;
       padding: 20px;
       // width: 100%;

@@ -5,7 +5,7 @@
       <el-dropdown style="height:100%;">
         <div class="bar-info-container">
           <i class="el-icon-user-solid userInfo-avatar"></i>
-          <span class="userInfo-name">Ytms</span>
+          <span class="userInfo-name">{{ name }}</span>
           <i class="el-icon-arrow-down el-icon--right"></i>
         </div>
         <el-dropdown-menu slot="dropdown">
@@ -17,8 +17,17 @@
 </template>
 
 <script>
+import DataStore from "@/global/storage/index";
 
 export default {
+  data() {
+    return {
+      name: ""
+    };
+  },
+  created() {
+    this.name = DataStore.getName();
+  },
   props: {
     collapse: {
       type: Boolean,
@@ -30,54 +39,64 @@ export default {
       this.$emit("update:collapse", !this.collapse);
     }
   }
-}
+};
 </script>
 
 <style lang="less" scoped>
-  .header-section{
-    border-left: 1px solid rgb(223, 222, 222);
-    position: relative;
-    padding: 0 20px;
-    background-color: #fff;
-    height: 64px;
-    box-shadow: 2px 2px 10px rgba(29, 35, 41, 0.1);
-    z-index: 10;
+.header-section {
+  border-left: 1px solid rgb(223, 222, 222);
+  position: relative;
+  padding: 0 20px;
+  background-color: rgb(43, 84, 104);
+  height: 64px;
+  box-shadow: 2px 2px 10px rgba(29, 35, 41, 0.1);
+  z-index: 10;
+  display: flex;
+  .header-bd {
+    flex: 1;
+  }
+  .header-bd,
+  .header-hd,
+  .header-ft {
     display: flex;
-    .header-bd{
-      flex: 1;
-    }
-    .header-bd,.header-hd,.header-ft{
-      display: flex;
-      align-items: center;
-    }
-    .bar-info-container {
-      display: flex;
-      align-items: center;
-      height: 100%;
-      padding: 0 10px;
-      transition: all 0.2s ease;
-      cursor: pointer;
-      &:hover {
-        background-color: #ecf5ff;
-      }
+    align-items: center;
+  }
+  .bar-info-container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 10px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    &:hover {
+      background-color: #ecf5ff;
       .userInfo-name {
-        font-size: 14px;
-        vertical-align: middle;
+        color: #333;
       }
-      .userInfo-avatar {
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        line-height: 20px;
-        text-align: center;
-        background-color: rgb(206, 204, 204);
-        border-radius: 50%;
-        outline: none;
-        margin: 0 10px;
+      .el-icon--right {
+        color: #333;
       }
-      .el-icon--right{
-        margin-left: 10px;
-      }
+    }
+    .userInfo-name {
+      font-size: 14px;
+      vertical-align: middle;
+      color: #fff;
+    }
+    .userInfo-avatar {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+      text-align: center;
+      background-color: rgb(189, 187, 187);
+      border-radius: 50%;
+      outline: none;
+      margin: 0 10px;
+    }
+    .el-icon--right {
+      margin-left: 10px;
+      color: #fff;
     }
   }
+}
 </style>
