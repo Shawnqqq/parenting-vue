@@ -8,6 +8,11 @@ const managerEdit = () =>
   import(/* webpackChunkName: "managerEdit" */ "@/views/managerEdit"); //管理员编辑
 const user = () => import(/* webpackChunkName: "user" */ "@/views/user"); // 用户统计
 const sort = () => import(/* webpackChunkName: "sort" */ "@/views/sort"); // 分类管理
+const topic = () => import(/* webpackChunkName: "topic" */ "@/views/topic"); // 话题管理
+const topicCreate = () =>
+  import(/* webpackChunkName: "topicCreate" */ "@/views/topicCreate"); //话题添加
+const topicEdit = () =>
+  import(/* webpackChunkName: "topicEdit" */ "@/views/topicEdit"); //话题编辑
 
 import BasicLayout from "@/components/BasicLayout";
 
@@ -84,6 +89,47 @@ export default [
             title: "分类管理"
           }
         }
+      },
+      {
+        path: "/admin/topic",
+        name: "topicrRoot",
+        component: { render: h => h("router-view") },
+        redirect: { name: "topic" },
+        meta: {
+          nav: {
+            icon: "el-icon-chat-line-round",
+            title: "话题管理"
+          }
+        },
+        children: [
+          {
+            path: "/admin/topic",
+            name: "topic",
+            component: topic,
+            meta: {
+              nav: {
+                icon: "el-icon-menu",
+                title: "菜单"
+              }
+            }
+          },
+          {
+            path: "/admin/topic/create",
+            name: "topicCreate",
+            component: topicCreate,
+            meta: {
+              nav: {
+                icon: "el-icon-circle-plus-outline",
+                title: "创建"
+              }
+            }
+          },
+          {
+            path: "/admim/topic/edit",
+            name: "topicEdit",
+            component: topicEdit
+          }
+        ]
       }
     ]
   }

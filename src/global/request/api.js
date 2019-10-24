@@ -8,9 +8,9 @@ const API = {
   user: `${PREFIX}/user`,
   userItem: id => `${PREFIX}/user/${id}`,
   sort: `${PREFIX}/sort`,
-  sortItem: id => `${PREFIX}/sort/${id}`
-  // class:`${PREFIX}/class`,
-  // classItem: id => `${PREFIX}/class/${id}`,
+  sortItem: id => `${PREFIX}/sort/${id}`,
+  topic: `${PREFIX}/topic`,
+  topicItem: id => `${PREFIX}/topic/${id}`
   // ClassAll: `${PREFIX}/classAll`,
   // classUser: id => `${PREFIX}/class/${id}/addUser`,
   // lessonItem: id => `${PREFIX}/lesson/${id}` ,

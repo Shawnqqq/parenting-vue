@@ -17,12 +17,19 @@
 import Header from "./BasicLayoutHeader";
 import Footer from "./BasicLayoutFootert";
 import Sider from "./BasicLayoutSider";
+import DataStore from "@/global/storage/index.js";
 
 export default {
   data() {
     return {
       collapse: false
     };
+  },
+  created() {
+    let token = DataStore.storage.get("token");
+    if (!token) {
+      return this.$router.replace({ name: "login" });
+    }
   },
   components: {
     Header,

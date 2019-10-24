@@ -2,14 +2,16 @@
   <div class="header-section">
     <div class="header-bd"></div>
     <div class="header-ft">
-      <el-dropdown style="height:100%;">
+      <el-dropdown style="height:100%;" @command="handleCommand">
         <div class="bar-info-container">
           <i class="el-icon-user-solid userInfo-avatar"></i>
           <span class="userInfo-name">{{ name }}</span>
           <i class="el-icon-arrow-down el-icon--right"></i>
         </div>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item icon="el-icon-video-pause">退出</el-dropdown-item>
+          <el-dropdown-item icon="el-icon-video-pause" command="out"
+            >退出</el-dropdown-item
+          >
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -37,6 +39,9 @@ export default {
   methods: {
     handleCollapse() {
       this.$emit("update:collapse", !this.collapse);
+    },
+    handleCommand() {
+      DataStore.clear();
     }
   }
 };
@@ -47,7 +52,7 @@ export default {
   border-left: 1px solid rgb(223, 222, 222);
   position: relative;
   padding: 0 20px;
-  background-color: rgb(43, 84, 104);
+  background-color: #fff;
   height: 64px;
   box-shadow: 2px 2px 10px rgba(29, 35, 41, 0.1);
   z-index: 10;
@@ -70,17 +75,10 @@ export default {
     cursor: pointer;
     &:hover {
       background-color: #ecf5ff;
-      .userInfo-name {
-        color: #333;
-      }
-      .el-icon--right {
-        color: #333;
-      }
     }
     .userInfo-name {
       font-size: 14px;
       vertical-align: middle;
-      color: #fff;
     }
     .userInfo-avatar {
       display: inline-block;
@@ -95,7 +93,6 @@ export default {
     }
     .el-icon--right {
       margin-left: 10px;
-      color: #fff;
     }
   }
 }
