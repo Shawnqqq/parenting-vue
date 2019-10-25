@@ -10,13 +10,9 @@ const API = {
   sort: `${PREFIX}/sort`,
   sortItem: id => `${PREFIX}/sort/${id}`,
   topic: `${PREFIX}/topic`,
-  topicItem: id => `${PREFIX}/topic/${id}`
-  // ClassAll: `${PREFIX}/classAll`,
-  // classUser: id => `${PREFIX}/class/${id}/addUser`,
-  // lessonItem: id => `${PREFIX}/lesson/${id}` ,
-  // lessonClick: id => `${PREFIX}/lesson/${id}/click`,
-  // leave:`${PREFIX}/leave`,
-  // leaveItem:  id => `${PREFIX}/leave/${id}`
+  topicItem: id => `${PREFIX}/topic/${id}`,
+  answer: `${PREFIX}/answer`,
+  answerItem: id => `${PREFIX}/answer/${id}`
 };
 
 export default API;

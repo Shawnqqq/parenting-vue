@@ -13,6 +13,9 @@ const topicCreate = () =>
   import(/* webpackChunkName: "topicCreate" */ "@/views/topicCreate"); //话题添加
 const topicEdit = () =>
   import(/* webpackChunkName: "topicEdit" */ "@/views/topicEdit"); //话题编辑
+const answer = () => import(/* webpackChunkName: "answer" */ "@/views/answer"); // 回答管理
+const compilation = () =>
+  import(/* webpackChunkName: "compilation" */ "@/views/compilation"); // 回答管理
 
 import BasicLayout from "@/components/BasicLayout";
 
@@ -128,8 +131,24 @@ export default [
             path: "/admim/topic/edit",
             name: "topicEdit",
             component: topicEdit
+          },
+          {
+            path: "/admin/topic/answer",
+            name: "answer",
+            component: answer
           }
         ]
+      },
+      {
+        path: "/admin/compilation",
+        name: "compilation",
+        component: compilation,
+        meta: {
+          nav: {
+            icon: "el-icon-star-off",
+            title: "合辑管理"
+          }
+        }
       }
     ]
   }

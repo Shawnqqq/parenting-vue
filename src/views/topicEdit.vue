@@ -41,7 +41,8 @@
           <el-input type="textarea" :rows="6" v-model="formData.text" />
         </el-form-item>
         <el-form-item class="warpper">
-          <el-button type="primary" @click="handleEditTopic">修改</el-button>
+          <el-button type="success" @click="handleEditTopic">修改</el-button>
+          <el-button type="info" @click="hanleReturn">返回</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -73,11 +74,14 @@ export default {
     let id = this.$route.params.id;
     sortService.list().then(res => {
       this.sort_value = res.data;
-    })
-    topicService.single(id).then(res =>{
-      res.data.sort_id = Number(res.data.sort_id)
-      this.formData= res.data
-    })
+    });
+    topicService.single(id).then(res => {
+      if (res.code !== 200) {
+        this.$message.error(res.message);
+      }
+      res.data.sort_id = Number(res.data.sort_id);
+      this.formData = res.data;
+    });
   },
   methods: {
     handleEditTopic() {
@@ -89,16 +93,15 @@ export default {
             text: this.formData.text
           };
           let id = this.$route.params.id;
-          topicService.update(id,params).then(res => {
+          topicService.update(id, params).then(res => {
             if (res.code === 200) {
-              console.log(res)
               this.$message({
                 message: res.message,
                 type: "success"
               });
               this.$router.push({ name: "topic" });
-            }else{
-              console.log(res.message)
+            } else {
+              console.log(res.message);
             }
           });
         } else {
@@ -108,6 +111,9 @@ export default {
           });
         }
       });
+    },
+    hanleReturn() {
+      this.$router.push({ name: "topic" });
     }
   }
 };
