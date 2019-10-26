@@ -21,12 +21,44 @@
       v-model="tableData[0].text"
     >
     </el-input>
+    <div class="show-answer">
+      <el-table :data="showAnswer" style="width: 100%" class="answer-table">
+        <el-table-column label="展示" width="55">
+          <template>
+            <i class="el-icon-view" style="padding-left:10px"></i>
+          </template>
+        </el-table-column>
+        <el-table-column prop="nick_name" label="用户名" width="100">
+          <template slot-scope="scope">
+            <span style="padding-left:10px">{{ scope.row.nick_name }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="praise" label="点赞" width="100">
+          <template slot-scope="scope">
+            <span style="padding-left:10px">{{ scope.row.praise }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="collect" label="收藏" width="100">
+          <template slot-scope="scope">
+            <span style="padding-left:10px">{{ scope.row.collect }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="text" label="内容">
+          <template slot-scope="scope">
+            <span class="answer-text">{{ scope.row.text }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="create_time" label="创建时间" width="110">
+        </el-table-column>
+      </el-table>
+    </div>
     <div class="container-answer">
+      <el-button size="mini" type="success" @click="handleShow">展示</el-button>
       <el-table
         :data="answerData"
-        ref="multipleTable"
         tooltip-effect="dark"
-        class="answer-table"
+        show-overflow-tooltip
+        @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" width="55"> </el-table-column>
         <el-table-column label="用户名" width="100">
@@ -58,7 +90,9 @@ export default {
   data() {
     return {
       tableData: [{ text: "" }],
-      answerData: []
+      answerData: [],
+      showAnswer: [],
+      arrayAnswer: []
     };
   },
   created() {
@@ -70,17 +104,40 @@ export default {
       topicService.single(id).then(res => {
         if (res.code !== 200) {
           this.$message.error(res.message);
+          return;
         }
         this.tableData.splice(0, 1, res.data);
+        if (res.answer) {
+          res.answer.text = res.answer.text.replace(/<\/?.+?>/g, "");
+          this.showAnswer.splice(0, 1, res.answer);
+        }
       });
       answerService.single(id).then(res => {
         if (res.code !== 200) {
           this.$message.error(res.message);
+          return;
         }
         res.data.forEach(data => {
           data.text = data.text.replace(/<\/?.+?>/g, "");
         });
         this.answerData = res.data;
+      });
+    },
+    handleSelectionChange(val) {
+      this.arrayAnswer = val;
+    },
+    handleShow() {
+      let id = this.$route.params.id;
+      if (this.arrayAnswer.length !== 1) {
+        this.$message.error("只能选择一条展示喔");
+        return;
+      }
+      let params = { answer_id: this.arrayAnswer[0].id };
+      topicService.show(id, params).then(res => {
+        if (res.code !== 200) {
+          this.$message.error(res.message);
+        }
+        this.onLoad();
       });
     }
   }
@@ -98,6 +155,9 @@ export default {
   padding: 15px;
 }
 .container-textarea {
+  box-shadow: 2px 2px 10px rgba(153, 153, 153, 0.349);
+}
+.show-answer {
   box-shadow: 2px 2px 10px rgba(153, 153, 153, 0.349);
 }
 .topic-title {

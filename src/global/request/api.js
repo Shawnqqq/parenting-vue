@@ -11,6 +11,7 @@ const API = {
   sortItem: id => `${PREFIX}/sort/${id}`,
   topic: `${PREFIX}/topic`,
   topicItem: id => `${PREFIX}/topic/${id}`,
+  topicShow: id => `${PREFIX}/topicShow/${id}`,
   answer: `${PREFIX}/answer`,
   answerItem: id => `${PREFIX}/answer/${id}`
 };

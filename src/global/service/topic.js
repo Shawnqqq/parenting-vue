@@ -16,6 +16,9 @@ const Topic = {
   },
   single: function(id) {
     return request.get(API.topicItem(id));
+  },
+  show: function(id, params) {
+    return request.put(API.topicShow(id), params);
   }
 };
 
