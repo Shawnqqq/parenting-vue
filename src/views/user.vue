@@ -1,65 +1,102 @@
 <template>
-  <div class="container">
-    <div class="total">
-      <div class="total-text">总用户</div>
-      <div class="total-num">{{ total }}</div>
-    </div>
-    <div class="circle">
-      <i-circle
-        :size="200"
-        :trail-width="6"
-        :stroke-width="6"
-        :percent="(female / total) * 100"
-        stroke-linecap="square"
-        stroke-color="#FFC0CB"
-        trail-color="#FFF0F2"
+  <el-tabs class="container" v-model="activeName">
+    <el-tab-pane label="用户统计" name="total" style="margin-top:20px">
+      <div class="total">
+        <div class="total-text">总用户</div>
+        <div class="total-num">{{ total }}</div>
+      </div>
+      <div class="circle">
+        <i-circle
+          :size="200"
+          :trail-width="6"
+          :stroke-width="6"
+          :percent="(female / total) * 100"
+          stroke-linecap="square"
+          stroke-color="#FFC0CB"
+          trail-color="#FFF0F2"
+        >
+          <div class="demo-Circle-custom">
+            <h1>{{ female }}</h1>
+            <p>女性用户</p>
+            <span>
+              占总人数
+              <i>{{ Math.floor((female / total) * 100) }}%</i>
+            </span>
+          </div>
+        </i-circle>
+        <i-circle
+          :size="200"
+          :trail-width="6"
+          :stroke-width="6"
+          :percent="(pregnant / total) * 100"
+          stroke-linecap="square"
+          stroke-color="#43a3fb"
+        >
+          <div class="demo-Circle-custom">
+            <h1>{{ pregnant }}</h1>
+            <p>怀孕用户</p>
+            <span>
+              占总人数
+              <i>{{ Math.floor((pregnant / total) * 100) }}%</i>
+            </span>
+          </div>
+        </i-circle>
+        <i-circle
+          :size="200"
+          :trail-width="6"
+          :stroke-width="6"
+          :percent="(bred / total) * 100"
+          stroke-linecap="square"
+          stroke-color="#FFD700"
+          trail-color="#FFFFE0"
+        >
+          <div class="demo-Circle-custom">
+            <h1>{{ bred }}</h1>
+            <p>已育用户</p>
+            <span>
+              占总人数
+              <i>{{ Math.floor((bred / total) * 100) }}%</i>
+            </span>
+          </div>
+        </i-circle>
+      </div>
+    </el-tab-pane>
+    <el-tab-pane label="用户管理" name="user">
+      <el-table :data="tableData" style="width: 100%">
+        <el-table-column prop="nick_name" label="昵称" width="180">
+        </el-table-column>
+        <el-table-column prop="sex" label="性别" width="180">
+          <template slot-scope="scope">
+            <el-tag
+              :type="scope.row.sex === '男' ? 'primary' : 'warning'"
+              disable-transitions
+              >{{ scope.row.sex }}</el-tag
+            >
+          </template>
+        </el-table-column>
+        <el-table-column prop="state" label="状态">
+          <template slot-scope="scope">
+            <el-tag
+              effect="dark"
+              :type="scope.row.state === '无' ? 'primary' : 'warning'"
+              disable-transitions
+              >{{ scope.row.state }}</el-tag
+            >
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-pagination
+        class="pagination"
+        layout="prev, pager, next"
+        :page-size="pagination.pageSize"
+        :pager-count="7"
+        :current-page.sync="pagination.nowPage"
+        :total="pagination.total"
+        @current-change="onLoad"
       >
-        <div class="demo-Circle-custom">
-          <h1>{{ female }}</h1>
-          <p>女性用户</p>
-          <span>
-            占总人数
-            <i>{{ Math.floor((female / total) * 100) }}%</i>
-          </span>
-        </div>
-      </i-circle>
-      <i-circle
-        :size="200"
-        :trail-width="6"
-        :stroke-width="6"
-        :percent="(pregnant / total) * 100"
-        stroke-linecap="square"
-        stroke-color="#43a3fb"
-      >
-        <div class="demo-Circle-custom">
-          <h1>{{ pregnant }}</h1>
-          <p>怀孕用户</p>
-          <span>
-            占总人数
-            <i>{{ Math.floor((pregnant / total) * 100) }}%</i>
-          </span>
-        </div>
-      </i-circle>
-      <i-circle
-        :size="200"
-        :trail-width="6"
-        :stroke-width="6"
-        :percent="(bred / total) * 100"
-        stroke-linecap="square"
-        stroke-color="#FFD700"
-        trail-color="#FFFFE0"
-      >
-        <div class="demo-Circle-custom">
-          <h1>{{ bred }}</h1>
-          <p>已育用户</p>
-          <span>
-            占总人数
-            <i>{{ Math.floor((bred / total) * 100) }}%</i>
-          </span>
-        </div>
-      </i-circle>
-    </div>
-  </div>
+      </el-pagination>
+    </el-tab-pane>
+  </el-tabs>
 </template>
 
 <script>
@@ -71,7 +108,14 @@ export default {
       total: 0,
       female: 0,
       pregnant: 0,
-      bred: 0
+      bred: 0,
+      activeName: "total",
+      pagination: {
+        pageSize: 10,
+        total: 0,
+        nowPage: 1
+      },
+      tableData: []
     };
   },
   created() {
@@ -81,6 +125,40 @@ export default {
       this.pregnant = res.data.pregnant;
       this.bred = res.data.bred;
     });
+    this.onLoad();
+  },
+  methods: {
+    onLoad() {
+      let params = {
+        pageSize: this.pagination.pageSize,
+        nowPage: this.pagination.nowPage
+      };
+      userService.info(params).then(res => {
+        res.data.forEach(data => {
+          switch (Number(data.sex)) {
+            case 1:
+              data.sex = "男";
+              break;
+            case 2:
+              data.sex = "女";
+              break;
+          }
+          switch (Number(data.state)) {
+            case 1:
+              data.state = "无";
+              break;
+            case 2:
+              data.state = "已孕";
+              break;
+            case 3:
+              data.state = "已育";
+              break;
+          }
+        });
+        this.tableData = res.data;
+        this.pagination.total = res.total;
+      });
+    }
   }
 };
 </script>
@@ -146,5 +224,11 @@ export default {
     font-style: normal;
     color: #3f414d;
   }
+}
+.pagination {
+  padding: 20px;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
 }
 </style>

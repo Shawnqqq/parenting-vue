@@ -13,6 +13,9 @@ const User = {
   },
   update: function(id, params) {
     return request.put(API.userItem(id), params);
+  },
+  info: function(params) {
+    return request.get(API.userInfo, params);
   }
 };
 

@@ -7,6 +7,7 @@ const API = {
   managerItem: id => `${PREFIX}/manager/${id}`,
   user: `${PREFIX}/user`,
   userItem: id => `${PREFIX}/user/${id}`,
+  userInfo: `${PREFIX}/userInfo`,
   sort: `${PREFIX}/sort`,
   sortItem: id => `${PREFIX}/sort/${id}`,
   topic: `${PREFIX}/topic`,
