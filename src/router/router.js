@@ -3,19 +3,20 @@ const AccountLogin = () =>
 const manager = () =>
   import(/* webpackChunkName: "Manager" */ "@/views/manager"); //管理员
 const managerCreate = () =>
-  import(/* webpackChunkName: "managerCreate" */ "@/views/managerCreate"); //管理员添加
+  import(/* webpackChunkName: "Manager" */ "@/views/managerCreate"); //管理员添加
 const managerEdit = () =>
-  import(/* webpackChunkName: "managerEdit" */ "@/views/managerEdit"); //管理员编辑
-const user = () => import(/* webpackChunkName: "user" */ "@/views/user"); // 用户统计
-const sort = () => import(/* webpackChunkName: "sort" */ "@/views/sort"); // 分类管理
-const topic = () => import(/* webpackChunkName: "topic" */ "@/views/topic"); // 话题管理
+  import(/* webpackChunkName: "Manager" */ "@/views/managerEdit"); //管理员编辑
+const user = () => import(/* webpackChunkName: "User" */ "@/views/user"); // 用户统计
+const category = () =>
+  import(/* webpackChunkName: "Category" */ "@/views/category"); // 分类管理
+const topic = () => import(/* webpackChunkName: "Topic" */ "@/views/topic"); // 话题管理
 const topicCreate = () =>
-  import(/* webpackChunkName: "topicCreate" */ "@/views/topicCreate"); //话题添加
+  import(/* webpackChunkName: "Topic" */ "@/views/topicCreate"); //话题添加
 const topicEdit = () =>
-  import(/* webpackChunkName: "topicEdit" */ "@/views/topicEdit"); //话题编辑
-const answer = () => import(/* webpackChunkName: "answer" */ "@/views/answer"); // 回答管理
+  import(/* webpackChunkName: "Topic" */ "@/views/topicEdit"); //话题编辑
+const answer = () => import(/* webpackChunkName: "Answer" */ "@/views/answer"); // 回答管理
 const compilation = () =>
-  import(/* webpackChunkName: "compilation" */ "@/views/compilation"); // 回答管理
+  import(/* webpackChunkName: "Compilation" */ "@/views/compilation"); // 回答管理
 
 import BasicLayout from "@/components/BasicLayout";
 
@@ -83,9 +84,9 @@ export default [
         }
       },
       {
-        path: "/admin/sort",
-        name: "sort",
-        component: sort,
+        path: "/admin/category",
+        name: "category",
+        component: category,
         meta: {
           nav: {
             icon: "el-icon-sort",

@@ -63,7 +63,7 @@ export default {
     }
     .page-body {
       flex: 1;
-      padding: 20px;
+      padding: 15px;
       // width: 100%;
       box-sizing: border-box;
     }

@@ -23,7 +23,7 @@
           prop="sort_id"
           style="width:600px;"
         >
-          <el-select v-model="formData.sort_id" placeholder="请选择分类">
+          <el-select v-model="formData.category_id" placeholder="请选择分类">
             <el-option
               v-for="item in sort_value"
               :key="item.id"
@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import sortService from "@/global/service/sort.js";
+import categoryService from "@/global/service/category.js";
 import topicService from "@/global/service/topic.js";
 
 export default {
@@ -59,12 +59,14 @@ export default {
       loading: false,
       rules: {
         title: [{ required: true, message: "请输入标题", trigger: "blur" }],
-        sort_id: [{ required: true, message: "请选择分类", trigger: "change" }],
+        category_id: [
+          { required: true, message: "请选择分类", trigger: "change" }
+        ],
         text: [{ required: true, message: "请输入内容", trigger: "blur" }]
       },
       formData: {
         title: "",
-        sort_id: "",
+        category_id: "",
         text: ""
       },
       sort_value: []
@@ -72,14 +74,14 @@ export default {
   },
   created() {
     let id = this.$route.params.id;
-    sortService.list().then(res => {
+    categoryService.list().then(res => {
       this.sort_value = res.data;
     });
     topicService.single(id).then(res => {
       if (res.code !== 200) {
         this.$message.error(res.message);
       }
-      res.data.sort_id = Number(res.data.sort_id);
+      res.data.category_id = Number(res.data.category_id);
       this.formData = res.data;
     });
   },
@@ -89,7 +91,7 @@ export default {
         if (valid) {
           let params = {
             title: this.formData.title,
-            sort_id: this.formData.sort_id,
+            category_id: this.formData.category_id,
             text: this.formData.text
           };
           let id = this.$route.params.id;

@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import sortService from "@/global/service/sort.js";
+import categoryService from "@/global/service/category.js";
 import topicService from "@/global/service/topic.js";
 
 export default {
@@ -70,7 +70,7 @@ export default {
     };
   },
   created() {
-    sortService.list().then(res => {
+    categoryService.list().then(res => {
       this.sort_value = res.data;
     });
   },
@@ -80,7 +80,7 @@ export default {
         if (valid) {
           let params = {
             title: this.formData.title,
-            sort_id: this.formData.sort_id,
+            category_id: this.formData.sort_id,
             text: this.formData.text
           };
           topicService.insert(params).then(res => {

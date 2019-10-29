@@ -13,12 +13,15 @@
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
+          <el-button
+            size="mini"
+            type="text"
+            @click="handleEdit(scope.$index, scope.row)"
             >修改</el-button
           >
           <el-button
             size="mini"
-            type="danger"
+            type="text"
             @click="handleDelete(scope.$index, scope.row)"
             >删除</el-button
           >
@@ -36,7 +39,7 @@
 </template>
 
 <script>
-import sortService from "@/global/service/sort.js";
+import category from "@/global/service/category.js";
 
 export default {
   data() {
@@ -49,7 +52,7 @@ export default {
   },
   methods: {
     onload() {
-      sortService.list().then(res => {
+      category.list().then(res => {
         this.tableData = res.data;
       });
     },
@@ -69,7 +72,7 @@ export default {
             this.$message.error("值不能为空");
             return;
           }
-          sortService.update(id, { name: active.value }).then(res => {
+          category.update(id, { name: active.value }).then(res => {
             if (res.code !== 200) {
               console.log(res.message);
               return;
@@ -96,7 +99,7 @@ export default {
             message: "删除成功!"
           });
           let id = row.id;
-          sortService.delete(id);
+          category.delete(id);
           this.tableData.splice(index, 1);
         })
         .catch(() => {
@@ -121,7 +124,7 @@ export default {
             this.$message.error("值不能为空");
             return;
           }
-          sortService.insert({ name: active.value }).then(res => {
+          category.insert({ name: active.value }).then(res => {
             if (res.code !== 200) {
               console.log(res.message);
               return;
@@ -143,9 +146,6 @@ export default {
 <style lang="less" scoped>
 .sort-container {
   position: relative;
-}
-.manager {
-  box-shadow: 2px 2px 8px rgba(153, 153, 153, 0.349);
 }
 .insert-btn {
   position: absolute;

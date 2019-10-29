@@ -166,7 +166,6 @@ export default {
 <style lang="less">
 .container {
   background-color: #fff;
-  box-shadow: 2px 2px 8px rgba(153, 153, 153, 0.349);
   padding: 30px;
   .total {
     margin: 0 auto 40px auto;

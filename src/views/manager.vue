@@ -15,12 +15,12 @@
     </el-table-column>
     <el-table-column label="操作">
       <template slot-scope="scope">
-        <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
+        <el-button type="text" @click="handleEdit(scope.$index, scope.row)"
           >修改</el-button
         >
         <el-button
           size="mini"
-          type="danger"
+          type="text"
           @click="handleDelete(scope.$index, scope.row)"
           >删除</el-button
         >
@@ -74,8 +74,4 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
-.manager {
-  box-shadow: 2px 2px 8px rgba(153, 153, 153, 0.349);
-}
-</style>
+<style lang="less" scoped></style>
