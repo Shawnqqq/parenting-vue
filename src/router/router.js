@@ -15,8 +15,11 @@ const topicCreate = () =>
 const topicEdit = () =>
   import(/* webpackChunkName: "Topic" */ "@/views/topicEdit"); //话题编辑
 const answer = () => import(/* webpackChunkName: "Answer" */ "@/views/answer"); // 回答管理
-const compilation = () =>
-  import(/* webpackChunkName: "Compilation" */ "@/views/compilation"); // 回答管理
+const column = () => import(/* webpackChunkName: "column" */ "@/views/column"); // 合辑管理
+const columnCreate = () =>
+  import(/* webpackChunkName: "column" */ "@/views/columnCreate"); // 合辑添加
+const columnSingle = () =>
+  import(/* webpackChunkName: "column" */ "@/views/columnSingle");
 
 import BasicLayout from "@/components/BasicLayout";
 
@@ -141,15 +144,45 @@ export default [
         ]
       },
       {
-        path: "/admin/compilation",
-        name: "compilation",
-        component: compilation,
+        path: "/admin/column",
+        name: "columnRoot",
+        component: { render: h => h("router-view") },
+        redirect: { name: "column" },
         meta: {
           nav: {
             icon: "el-icon-star-off",
             title: "合辑管理"
           }
-        }
+        },
+        children: [
+          {
+            path: "/admin/column",
+            name: "column",
+            component: column,
+            meta: {
+              nav: {
+                icon: "el-icon-menu",
+                title: "菜单"
+              }
+            }
+          },
+          {
+            path: "/admin/column/create",
+            name: "columnCreate",
+            component: columnCreate,
+            meta: {
+              nav: {
+                icon: "el-icon-circle-plus-outline",
+                title: "创建"
+              }
+            }
+          },
+          {
+            path: "/admin/column/single",
+            name: "columnSingle",
+            component: columnSingle
+          }
+        ]
       }
     ]
   }

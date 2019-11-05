@@ -14,7 +14,13 @@ const API = {
   topicItem: id => `${PREFIX}/topic/${id}`,
   topicShow: id => `${PREFIX}/topicShow/${id}`,
   answer: `${PREFIX}/answer`,
-  answerItem: id => `${PREFIX}/answer/${id}`
+  answerItem: id => `${PREFIX}/answer/${id}`,
+  qiniuToken: `${PREFIX}/qiniu`,
+  qiniu_API: "https://upload-z2.qiniup.com",
+  column: `${PREFIX}/column`,
+  columnItem: id => `${PREFIX}/column/${id}`,
+  columnSelected: id => `${PREFIX}/columnSelected/${id}`,
+  columnUnSelected: id => `${PREFIX}/columnUnSelected/${id}`
 };
 
 export default API;
