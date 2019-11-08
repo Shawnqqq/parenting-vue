@@ -52,8 +52,13 @@
         style="width: 100%"
         @selection-change="handleSelectionChange"
       >
+        <el-table-column label="选择">
+          <el-button slot="header" size="small" @click="handleDelete"
+            >移除</el-button
+          >
+          <el-table-column type="selection" width="80"> </el-table-column>
+        </el-table-column>
         <el-table-column label="展示话题">
-          <el-table-column type="selection" width="55"> </el-table-column>
           <el-table-column label="标题">
             <template slot-scope="scope">
               <span class="topic-title">{{ scope.row.title }}</span>
@@ -68,18 +73,23 @@
           </el-table-column>
           <el-table-column prop="pv" label="PV"> </el-table-column>
           <el-table-column prop="follow" label="关注"> </el-table-column>
-          <el-table-column prop="answer_num" label="回答"> </el-table-column>
+          <el-table-column prop="answer_num" label="回答"></el-table-column>
         </el-table-column>
       </el-table>
       <el-table
         ref="multipleTable"
         :data="tableData"
         tooltip-effect="dark"
-        style="width: 100%;margin-top:30px"
+        style="width: 100%;margin-top:20px"
         @selection-change="handleDataChange"
       >
+        <el-table-column label="选择">
+          <el-button slot="header" size="small" @click="handleInsert"
+            >添加</el-button
+          >
+          <el-table-column type="selection" width="80"> </el-table-column>
+        </el-table-column>
         <el-table-column label="所有话题">
-          <el-table-column type="selection" width="55"> </el-table-column>
           <el-table-column label="标题">
             <template slot-scope="scope">
               <span class="topic-title">{{ scope.row.title }}</span>
@@ -94,9 +104,19 @@
           </el-table-column>
           <el-table-column prop="pv" label="PV"> </el-table-column>
           <el-table-column prop="follow" label="关注"> </el-table-column>
-          <el-table-column prop="answer_num" label="回答"> </el-table-column>
+          <el-table-column prop="answer_num" label="回答"></el-table-column>
         </el-table-column>
       </el-table>
+      <el-pagination
+        class="pagination"
+        layout="prev, pager, next"
+        :page-size="pagination.pageSize"
+        :pager-count="7"
+        :current-page.sync="pagination.nowPage"
+        :total="pagination.total"
+        @current-change="onload"
+      >
+      </el-pagination>
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -112,7 +132,14 @@ export default {
       tableName: "first",
       columnData: {},
       selectionData: [],
-      tableData: []
+      tableData: [],
+      pagination: {
+        pageSize: 10,
+        total: 0,
+        nowPage: 1
+      },
+      insertParams: [],
+      deleteParams: []
     };
   },
   created() {
@@ -125,11 +152,16 @@ export default {
   methods: {
     onload() {
       let id = this.$route.params.id;
+      let params = {
+        pageSize: this.pagination.pageSize,
+        nowPage: this.pagination.nowPage
+      };
       columnService.columnSelected(id).then(res => {
         this.selectionData = res.data;
       });
-      columnService.columnUnSelected(id).then(res => {
+      columnService.columnUnSelected(id, params).then(res => {
         this.tableData = res.data;
+        this.pagination.total = res.total;
       });
     },
     handleEditName(id) {
@@ -215,10 +247,51 @@ export default {
       return isLt2M;
     },
     handleSelectionChange(val) {
-      console.log(val);
+      let topicId = val.map(data => {
+        return data.topic_id;
+      });
+      this.deleteParams = topicId;
     },
     handleDataChange(val) {
-      console.log(val);
+      let topicId = val.map(data => {
+        return data.topic_id;
+      });
+      this.insertParams = topicId;
+    },
+    handleInsert() {
+      if (!this.insertParams.length) {
+        this.$message.error("没有选择话题喔~");
+        return;
+      }
+      let columnId = this.$route.params.id;
+      let params = this.insertParams.map(arr => {
+        return {
+          column_id: columnId,
+          topic_id: arr
+        };
+      });
+      columnService.columnSelect({ params }).then(res => {
+        if (res.code !== 200) {
+          this.$message.error(res.message);
+        }
+        this.onload();
+      });
+    },
+    handleDelete() {
+      if (!this.deleteParams.length) {
+        this.$message.error("没有选择话题喔~");
+        return;
+      }
+      let columnId = this.$route.params.id;
+      let params = this.deleteParams.map(arr => {
+        return [arr, columnId];
+      });
+      columnService.unColumnSelect({ params }).then(res => {
+        if (res.code !== 200) {
+          this.$message.error(res.message);
+        }
+        this.onload();
+      });
     }
   }
 };
@@ -246,5 +319,11 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.pagination {
+  padding: 20px 0 0 10px;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
 }
 </style>

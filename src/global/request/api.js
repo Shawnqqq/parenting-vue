@@ -19,8 +19,16 @@ const API = {
   qiniu_API: "https://upload-z2.qiniup.com",
   column: `${PREFIX}/column`,
   columnItem: id => `${PREFIX}/column/${id}`,
+  columnSelect: `${PREFIX}/columnSelected`,
   columnSelected: id => `${PREFIX}/columnSelected/${id}`,
-  columnUnSelected: id => `${PREFIX}/columnUnSelected/${id}`
+  columnUnSelected: id => `${PREFIX}/columnUnSelected/${id}`,
+  table: `${PREFIX}/table`,
+  tableRecommendSelected: `${PREFIX}/table/1/selected`,
+  tableRecommendUnSelected: `${PREFIX}/table/1/unSelected`,
+  tableAnswerSelected: `${PREFIX}/table/2/selected`,
+  tableAnswerUnSelected: `${PREFIX}/table/2/unSelected`,
+  banner: `${PREFIX}/banner`,
+  bannerItem: id => `${PREFIX}/banner/${id}`
 };
 
 export default API;

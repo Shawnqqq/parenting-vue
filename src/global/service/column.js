@@ -17,8 +17,14 @@ const Column = {
   columnSelected: function(id) {
     return request.get(API.columnSelected(id));
   },
-  columnUnSelected: function(id) {
-    return request.get(API.columnUnSelected(id));
+  columnUnSelected: function(id, params) {
+    return request.get(API.columnUnSelected(id), params);
+  },
+  columnSelect: function(params) {
+    return request.post(API.columnSelect, params);
+  },
+  unColumnSelect: function(params) {
+    return request.put(API.columnSelect, params);
   }
 };
 

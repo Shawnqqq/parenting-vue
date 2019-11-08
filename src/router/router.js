@@ -1,5 +1,11 @@
 const AccountLogin = () =>
   import(/* webpackChunkName: "AccountLogin" */ "@/views/login"); //登录页
+const index = () => import(/* webpackChunkName: "index" */ "@/views/index");
+const banner = () => import(/* webpackChunkName: "index" */ "@/views/banner");
+const bannerCreate = () =>
+  import(/* webpackChunkName: "index" */ "@/views/bannerCreate");
+const bannerSingle = () =>
+  import(/* webpackChunkName: "index" */ "@/views/bannerSingle");
 const manager = () =>
   import(/* webpackChunkName: "Manager" */ "@/views/manager"); //管理员
 const managerCreate = () =>
@@ -32,70 +38,53 @@ export default [
   {
     path: "/admin",
     component: BasicLayout,
-    name: "admin",
+    name: "index",
     children: [
       {
-        path: "/admin/manager",
-        name: "managerRoot",
+        path: "/admin/index",
+        name: "indenRoot",
         component: { render: h => h("router-view") },
-        redirect: { name: "manager" },
+        redirect: { name: "index" },
         meta: {
           nav: {
-            icon: "el-icon-s-custom",
-            title: "管理员"
+            icon: "el-icon-monitor",
+            title: "首页管理"
           }
         },
         children: [
           {
-            path: "/admin/manager",
-            name: "manager",
-            component: manager,
+            path: "/admin/index",
+            name: "index",
+            component: index,
             meta: {
               nav: {
-                icon: "el-icon-menu",
-                title: "菜单"
+                icon: "el-icon-chat-line-square",
+                title: "推荐及答题"
               }
             }
           },
           {
-            path: "/admin/manager/create",
-            name: "managerCreate",
-            component: managerCreate,
+            path: "/admin/index/banner",
+            name: "banner",
+            component: banner,
             meta: {
               nav: {
-                icon: "el-icon-circle-plus-outline",
-                title: "创建"
+                icon: "el-icon-c-scale-to-original",
+                title: "滑动轮播"
               }
             }
           },
           {
-            path: "/admim/manager/edit",
-            name: "managerEdit",
-            component: managerEdit
+            path: "/admin/index/bannerCreate",
+            name: "bannerCreate",
+            component: bannerCreate
+          },
+          {
+            path: "/admin/index/bannerSingle",
+            name: "bannerSingle",
+            component: bannerSingle
           }
         ]
-      },
-      {
-        path: "/admin/user",
-        name: "user",
-        component: user,
-        meta: {
-          nav: {
-            icon: "el-icon-s-data",
-            title: "用户统计"
-          }
-        }
-      },
-      {
-        path: "/admin/category",
-        name: "category",
-        component: category,
-        meta: {
-          nav: {
-            icon: "el-icon-sort",
-            title: "分类管理"
-          }
-        }
       },
       {
         path: "/admin/topic",
@@ -181,6 +170,69 @@ export default [
             path: "/admin/column/single",
             name: "columnSingle",
             component: columnSingle
+          }
+        ]
+      },
+      {
+        path: "/admin/category",
+        name: "category",
+        component: category,
+        meta: {
+          nav: {
+            icon: "el-icon-sort",
+            title: "分类管理"
+          }
+        }
+      },
+      {
+        path: "/admin/user",
+        name: "user",
+        component: user,
+        meta: {
+          nav: {
+            icon: "el-icon-s-data",
+            title: "用户统计"
+          }
+        }
+      },
+      {
+        path: "/admin/manager",
+        name: "managerRoot",
+        component: { render: h => h("router-view") },
+        redirect: { name: "manager" },
+        meta: {
+          nav: {
+            icon: "el-icon-s-custom",
+            title: "管理员"
+          }
+        },
+        children: [
+          {
+            path: "/admin/manager",
+            name: "manager",
+            component: manager,
+            meta: {
+              nav: {
+                icon: "el-icon-menu",
+                title: "菜单"
+              }
+            }
+          },
+          {
+            path: "/admin/manager/create",
+            name: "managerCreate",
+            component: managerCreate,
+            meta: {
+              nav: {
+                icon: "el-icon-circle-plus-outline",
+                title: "创建"
+              }
+            }
+          },
+          {
+            path: "/admim/manager/edit",
+            name: "managerEdit",
+            component: managerEdit
           }
         ]
       }

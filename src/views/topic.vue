@@ -13,23 +13,21 @@
       @click="onLoad()"
     ></el-button>
     <el-table style="width:100%;padding:30px" :data="tableData" class="topic">
-      <el-table-column label="标题" width="220">
+      <el-table-column label="标题">
         <template slot-scope="scope">
           <span class="topic-title">{{ scope.row.title }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="分类" width="150">
+      <el-table-column label="分类">
         <template slot-scope="scope">
           <div slot="reference" class="name-wrapper">
             <el-tag>{{ scope.row.name }}</el-tag>
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="pv" label="PV" width="100"> </el-table-column>
-      <el-table-column prop="follow" label="关注" width="100">
-      </el-table-column>
-      <el-table-column prop="answer_num" label="回答" width="100">
-      </el-table-column>
+      <el-table-column prop="pv" label="PV"> </el-table-column>
+      <el-table-column prop="follow" label="关注"> </el-table-column>
+      <el-table-column prop="answer_num" label="回答"> </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button size="mini" type="text" @click="handleSingle(scope.row)"
