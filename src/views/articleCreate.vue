@@ -1,58 +1,44 @@
 <template>
   <div class="container">
-    <h3 class="title">增加一个轮播图</h3>
-    <div class="image-title">封面图：</div>
+    <h3 class="title">增加一个文章</h3>
+    <form class="article-form">
+      <span class="text-title">标题</span>
+      <el-input class="text-input" v-model="title" placeholder="请输入名称" />
+    </form>
+    <div class="image-title">内容图：</div>
     <el-upload
       class="avatar-uploader"
       action=""
       :show-file-list="false"
-      :http-request="handleCover"
+      :http-request="handleContent"
       :before-upload="beforeAvatarUpload"
     >
-      <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+      <img v-if="contentUrl" :src="contentUrl" class="avatar" />
       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
-    <div class="image-title">页面内容：</div>
-    <el-select v-model="value" class="option" placeholder="请选择">
-      <el-option
-        v-for="item in options"
-        :key="item.id"
-        :label="item.title"
-        :value="item.id"
-      >
-      </el-option>
-    </el-select>
     <el-button class="btn" type="primary" @click="handleCreate">添加</el-button>
   </div>
 </template>
 
 <script>
 import qiniuService from "@/global/service/qiniu.js";
-import bannerService from "@/global/service/banner.js";
 import articleService from "@/global/service/article.js";
 
 export default {
   data() {
     return {
-      imageUrl: "",
-      value: "",
-      options: []
+      contentUrl: "",
+      title: ""
     };
-  },
-  created() {
-    articleService.list().then(res => {
-      this.options = res.data;
-    });
   },
   methods: {
     handleCreate() {
-      console.log(this.imageUrl, this.value);
-      if (this.imageUrl && this.value) {
+      if (this.contentUrl && this.title) {
         let params = {
-          image_url: this.imageUrl,
-          pages: this.value
+          content: this.contentUrl,
+          title: this.title
         };
-        bannerService.insert(params).then(res => {
+        articleService.insert(params).then(res => {
           if (res.code !== 200) {
             this.$message({
               message: res.message,
@@ -60,7 +46,7 @@ export default {
             });
             return;
           }
-          this.$router.push({ name: "banner" });
+          this.$router.push({ name: "article" });
         });
       } else {
         this.$message({
@@ -80,6 +66,11 @@ export default {
       qiniuService.upload(files.file).then(res => {
         this.imageUrl = res;
       });
+    },
+    handleContent(files) {
+      qiniuService.upload(files.file).then(res => {
+        this.contentUrl = res;
+      });
     }
   }
 };
@@ -94,12 +85,12 @@ export default {
 .title {
   padding: 20px;
 }
-.image-title {
+.image-title,
+.text-title {
   padding: 20px 0 0 20px;
 }
 .btn {
-  display: block;
-  margin: 50px 0 20px 100px;
+  margin: 20px;
 }
 .avatar-uploader,
 .el-upload {
@@ -128,7 +119,11 @@ export default {
   height: 178px;
   display: block;
 }
-.option {
-  margin-left: 100px;
+.text-input {
+  margin: 20px 0 0 50px;
+  width: 240px;
+}
+.article-form {
+  display: flex;
 }
 </style>

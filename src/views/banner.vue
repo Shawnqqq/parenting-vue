@@ -13,7 +13,7 @@
               class="btn"
               @click="handleSee(item.id)"
             >
-              查看内容
+              更换内容
             </el-button>
             <el-button
               type="text"

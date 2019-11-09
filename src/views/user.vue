@@ -144,8 +144,11 @@ export default {
               break;
           }
           switch (Number(data.state)) {
-            case 1:
+            case 0:
               data.state = "无";
+              break;
+            case 1:
+              data.state = "备孕";
               break;
             case 2:
               data.state = "已孕";

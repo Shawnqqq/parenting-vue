@@ -28,7 +28,9 @@ const API = {
   tableAnswerSelected: `${PREFIX}/table/2/selected`,
   tableAnswerUnSelected: `${PREFIX}/table/2/unSelected`,
   banner: `${PREFIX}/banner`,
-  bannerItem: id => `${PREFIX}/banner/${id}`
+  bannerItem: id => `${PREFIX}/banner/${id}`,
+  article: `${PREFIX}/article`,
+  articleItem: id => `${PREFIX}/article/${id}`
 };
 
 export default API;

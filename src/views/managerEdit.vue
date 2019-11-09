@@ -43,6 +43,7 @@
 
 <script>
 import managerService from "@/global/service/manager";
+import DataStore from "@/global/storage/index";
 
 export default {
   data() {
@@ -97,7 +98,8 @@ export default {
                 message: "修改成功",
                 type: "success"
               });
-              this.$router.push({ name: "manager" });
+              DataStore.clear();
+              this.$router.replace({ name: "login" });
             }
           });
         } else {

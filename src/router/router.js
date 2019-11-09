@@ -26,6 +26,12 @@ const columnCreate = () =>
   import(/* webpackChunkName: "column" */ "@/views/columnCreate"); // 合辑添加
 const columnSingle = () =>
   import(/* webpackChunkName: "column" */ "@/views/columnSingle");
+const article = () =>
+  import(/* webpackChunkName: "article" */ "@/views/article"); // 文章管理
+const articleCreate = () =>
+  import(/* webpackChunkName: "article" */ "@/views/articleCreate");
+const articleSingle = () =>
+  import(/* webpackChunkName: "article" */ "@/views/articleSingle");
 
 import BasicLayout from "@/components/BasicLayout";
 
@@ -83,6 +89,27 @@ export default [
             path: "/admin/index/bannerSingle",
             name: "bannerSingle",
             component: bannerSingle
+          },
+          {
+            path: "/admin/index/article",
+            name: "article",
+            component: article,
+            meta: {
+              nav: {
+                icon: "el-icon-tickets",
+                title: "文章管理"
+              }
+            }
+          },
+          {
+            path: "/admin/index/articleCreate",
+            name: "articleCreate",
+            component: articleCreate
+          },
+          {
+            path: "/admin/index/articleSingle",
+            name: "articleSingle",
+            component: articleSingle
           }
         ]
       },

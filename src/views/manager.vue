@@ -31,6 +31,7 @@
 
 <script>
 import managerService from "@/global/service/manager.js";
+import DataStore from "@/global/storage/index";
 
 export default {
   data() {
@@ -61,7 +62,8 @@ export default {
           });
           let id = row.id;
           managerService.delete(id);
-          this.tableData.splice(index, 1);
+          DataStore.clear();
+          this.$router.replace({ name: "login" });
         })
         .catch(() => {
           this.$message({
