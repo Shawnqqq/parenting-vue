@@ -1,5 +1,6 @@
 <template>
   <div class="header-section">
+    <v-bread class="header-hd" />
     <div class="header-bd"></div>
     <div class="header-ft">
       <el-dropdown style="height:100%;" @command="handleCommand">
@@ -20,6 +21,7 @@
 
 <script>
 import DataStore from "@/global/storage/index";
+import Bread from "./BasicBreadcrumb";
 
 export default {
   data() {
@@ -35,6 +37,9 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  components: {
+    "v-bread": Bread
   },
   methods: {
     handleCollapse() {

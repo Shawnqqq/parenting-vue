@@ -3,8 +3,7 @@
     <el-button @click="handleAdd()">添加 </el-button>
     <el-row :gutter="20">
       <el-col :span="6" v-for="item in articleData" :key="item.id">
-        <el-card :body-style="{ padding: '0px' }" class="el-card">
-          <el-image :src="item.content" class="image" fit="contain"> </el-image>
+        <el-card :body-style="{ padding: '20px 0 0 0' }" class="el-card">
           <div class="article-title">{{ item.title }}</div>
           <div class="bottom">
             <el-button

@@ -1,17 +1,27 @@
 <template>
   <div class="container">
-    <el-input
-      class="topic-input"
-      placeholder="请输入分类名称"
-      v-model="input"
+    <el-select
+      v-model="value"
+      placeholder="请选择分类"
+      class="topic-select"
       clearable
+      @change="onLoad()"
     >
-    </el-input>
+      <el-option
+        v-for="item in options"
+        :key="item.id"
+        :label="item.name"
+        :value="item.id"
+      >
+      </el-option>
+    </el-select>
     <el-button
-      icon="el-icon-search"
-      class="topic-btn"
-      @click="onLoad()"
-    ></el-button>
+      class="insert-btn"
+      type="primary"
+      icon="el-icon-circle-plus-outline"
+      @click="handleInsert()"
+      >添加
+    </el-button>
     <el-table style="width:100%;padding:30px" :data="tableData" class="topic">
       <el-table-column label="标题">
         <template slot-scope="scope">
@@ -63,6 +73,7 @@
 
 <script>
 import topicService from "@/global/service/topic.js";
+import category from "@/global/service/category.js";
 
 export default {
   data() {
@@ -73,7 +84,8 @@ export default {
         total: 0,
         nowPage: 1
       },
-      input: ""
+      value: "",
+      options: []
     };
   },
   created() {
@@ -84,11 +96,14 @@ export default {
       let params = {
         pageSize: this.pagination.pageSize,
         nowPage: this.pagination.nowPage,
-        filter: this.input
+        filter: this.value
       };
       topicService.list(params).then(res => {
         this.tableData = res.data;
         this.pagination.total = res.total;
+      });
+      category.list().then(res => {
+        this.options = res.data;
       });
     },
     handleEdit(index, row) {
@@ -121,6 +136,9 @@ export default {
     handleSingle(row) {
       let id = row.id;
       this.$router.push({ name: "answer", params: { id } });
+    },
+    handleInsert() {
+      this.$router.push({ name: "topicCreate" });
     }
   }
 };
@@ -130,9 +148,9 @@ export default {
 .container {
   box-shadow: 2px 2px 8px rgba(153, 153, 153, 0.349);
   background-color: #fff;
+  position: relative;
 }
-.topic-input {
-  width: 200px;
+.topic-select {
   margin: 20px 0 0 40px;
 }
 .topic-btn {
@@ -148,5 +166,10 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.insert-btn {
+  position: absolute;
+  top: 20px;
+  right: 50px;
 }
 </style>

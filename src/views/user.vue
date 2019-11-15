@@ -1,66 +1,5 @@
 <template>
   <el-tabs class="container" v-model="activeName">
-    <el-tab-pane label="用户统计" name="total" style="margin-top:20px">
-      <div class="total">
-        <div class="total-text">总用户</div>
-        <div class="total-num">{{ total }}</div>
-      </div>
-      <div class="circle">
-        <i-circle
-          :size="200"
-          :trail-width="6"
-          :stroke-width="6"
-          :percent="(female / total) * 100"
-          stroke-linecap="square"
-          stroke-color="#FFC0CB"
-          trail-color="#FFF0F2"
-        >
-          <div class="demo-Circle-custom">
-            <h1>{{ female }}</h1>
-            <p>女性用户</p>
-            <span>
-              占总人数
-              <i>{{ Math.floor((female / total) * 100) }}%</i>
-            </span>
-          </div>
-        </i-circle>
-        <i-circle
-          :size="200"
-          :trail-width="6"
-          :stroke-width="6"
-          :percent="(pregnant / total) * 100"
-          stroke-linecap="square"
-          stroke-color="#43a3fb"
-        >
-          <div class="demo-Circle-custom">
-            <h1>{{ pregnant }}</h1>
-            <p>怀孕用户</p>
-            <span>
-              占总人数
-              <i>{{ Math.floor((pregnant / total) * 100) }}%</i>
-            </span>
-          </div>
-        </i-circle>
-        <i-circle
-          :size="200"
-          :trail-width="6"
-          :stroke-width="6"
-          :percent="(bred / total) * 100"
-          stroke-linecap="square"
-          stroke-color="#FFD700"
-          trail-color="#FFFFE0"
-        >
-          <div class="demo-Circle-custom">
-            <h1>{{ bred }}</h1>
-            <p>已育用户</p>
-            <span>
-              占总人数
-              <i>{{ Math.floor((bred / total) * 100) }}%</i>
-            </span>
-          </div>
-        </i-circle>
-      </div>
-    </el-tab-pane>
     <el-tab-pane label="用户管理" name="user">
       <el-table :data="tableData" style="width: 100%">
         <el-table-column prop="nick_name" label="昵称" width="180">
@@ -109,7 +48,7 @@ export default {
       female: 0,
       pregnant: 0,
       bred: 0,
-      activeName: "total",
+      activeName: "user",
       pagination: {
         pageSize: 10,
         total: 0,

@@ -1,5 +1,7 @@
 const AccountLogin = () =>
   import(/* webpackChunkName: "AccountLogin" */ "@/views/login"); //登录页
+const Dashboard = () =>
+  import(/* webpackChunkName: "index" */ "@/views/Dashboard"); // 概览
 const index = () => import(/* webpackChunkName: "index" */ "@/views/index");
 const banner = () => import(/* webpackChunkName: "index" */ "@/views/banner");
 const bannerCreate = () =>
@@ -44,8 +46,23 @@ export default [
   {
     path: "/admin",
     component: BasicLayout,
-    name: "index",
+    name: "admin",
     children: [
+      {
+        path: "/admin",
+        name: "Dashboard",
+        component: Dashboard,
+        meta: {
+          nav: {
+            icon: "el-icon-pie-chart",
+            title: "概况"
+          },
+          breadcrumb: {
+            title: "概况",
+            replace: false
+          }
+        }
+      },
       {
         path: "/admin/index",
         name: "indenRoot",
@@ -54,6 +71,9 @@ export default [
         meta: {
           nav: {
             icon: "el-icon-monitor",
+            title: "首页管理"
+          },
+          breadcrumb: {
             title: "首页管理"
           }
         },
@@ -66,6 +86,9 @@ export default [
               nav: {
                 icon: "el-icon-chat-line-square",
                 title: "推荐及答题"
+              },
+              breadcrumb: {
+                title: "推荐及答题"
               }
             }
           },
@@ -77,18 +100,31 @@ export default [
               nav: {
                 icon: "el-icon-c-scale-to-original",
                 title: "滑动轮播"
+              },
+              breadcrumb: {
+                title: "滑动轮播"
               }
             }
           },
           {
             path: "/admin/index/bannerCreate",
             name: "bannerCreate",
-            component: bannerCreate
+            component: bannerCreate,
+            meta: {
+              breadcrumb: {
+                title: "新增"
+              }
+            }
           },
           {
             path: "/admin/index/bannerSingle",
             name: "bannerSingle",
-            component: bannerSingle
+            component: bannerSingle,
+            meta: {
+              breadcrumb: {
+                title: "详情"
+              }
+            }
           },
           {
             path: "/admin/index/article",
@@ -98,18 +134,31 @@ export default [
               nav: {
                 icon: "el-icon-tickets",
                 title: "文章管理"
+              },
+              breadcrumb: {
+                title: "文章管理"
               }
             }
           },
           {
             path: "/admin/index/articleCreate",
             name: "articleCreate",
-            component: articleCreate
+            component: articleCreate,
+            meta: {
+              breadcrumb: {
+                title: "增加"
+              }
+            }
           },
           {
             path: "/admin/index/articleSingle",
             name: "articleSingle",
-            component: articleSingle
+            component: articleSingle,
+            meta: {
+              breadcrumb: {
+                title: "详情"
+              }
+            }
           }
         ]
       },
@@ -122,6 +171,9 @@ export default [
           nav: {
             icon: "el-icon-chat-line-round",
             title: "话题管理"
+          },
+          breadcrumb: {
+            title: "话题管理"
           }
         },
         children: [
@@ -130,8 +182,7 @@ export default [
             name: "topic",
             component: topic,
             meta: {
-              nav: {
-                icon: "el-icon-menu",
+              breadcrumb: {
                 title: "菜单"
               }
             }
@@ -141,8 +192,7 @@ export default [
             name: "topicCreate",
             component: topicCreate,
             meta: {
-              nav: {
-                icon: "el-icon-circle-plus-outline",
+              breadcrumb: {
                 title: "创建"
               }
             }
@@ -150,7 +200,12 @@ export default [
           {
             path: "/admim/topic/edit",
             name: "topicEdit",
-            component: topicEdit
+            component: topicEdit,
+            meta: {
+              breadcrumb: {
+                title: "修改"
+              }
+            }
           },
           {
             path: "/admin/topic/answer",
@@ -168,28 +223,24 @@ export default [
           nav: {
             icon: "el-icon-star-off",
             title: "合辑管理"
+          },
+          breadcrumb: {
+            title: "合辑管理"
           }
         },
         children: [
           {
             path: "/admin/column",
             name: "column",
-            component: column,
-            meta: {
-              nav: {
-                icon: "el-icon-menu",
-                title: "菜单"
-              }
-            }
+            component: column
           },
           {
             path: "/admin/column/create",
             name: "columnCreate",
             component: columnCreate,
             meta: {
-              nav: {
-                icon: "el-icon-circle-plus-outline",
-                title: "创建"
+              breadcrumb: {
+                title: "添加"
               }
             }
           },
@@ -207,6 +258,9 @@ export default [
         meta: {
           nav: {
             icon: "el-icon-sort",
+            title: "分类管理"
+          },
+          breadcrumb: {
             title: "分类管理"
           }
         }
@@ -231,27 +285,23 @@ export default [
           nav: {
             icon: "el-icon-s-custom",
             title: "管理员"
+          },
+          breadcrumb: {
+            title: "管理员"
           }
         },
         children: [
           {
             path: "/admin/manager",
             name: "manager",
-            component: manager,
-            meta: {
-              nav: {
-                icon: "el-icon-menu",
-                title: "菜单"
-              }
-            }
+            component: manager
           },
           {
             path: "/admin/manager/create",
             name: "managerCreate",
             component: managerCreate,
             meta: {
-              nav: {
-                icon: "el-icon-circle-plus-outline",
+              breadcrumb: {
                 title: "创建"
               }
             }
@@ -259,7 +309,12 @@ export default [
           {
             path: "/admim/manager/edit",
             name: "managerEdit",
-            component: managerEdit
+            component: managerEdit,
+            meta: {
+              breadcrumb: {
+                title: "修改"
+              }
+            }
           }
         ]
       }

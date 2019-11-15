@@ -9,13 +9,6 @@
     >
       编辑封面
     </el-upload>
-    <el-image
-      v-if="contentData.image_url"
-      :src="contentData.image_url"
-      class="image"
-      fit="contain"
-    >
-    </el-image>
     <div class="content">
       <div class="title">内容:</div>
       <el-select v-model="value" placeholder="请选择">
@@ -136,7 +129,7 @@ export default {
   display: flex;
   font-size: 14px;
   line-height: 40px;
-  padding-bottom: 100px;
+  padding: 100px 0;
 }
 .title {
   margin-right: 30px;

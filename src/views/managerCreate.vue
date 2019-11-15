@@ -37,6 +37,7 @@
           <el-button type="primary" @click="handleCreateManager"
             >添加</el-button
           >
+          <el-button type="info" @click="handlereturn">返回</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -101,6 +102,9 @@ export default {
           });
         }
       });
+    },
+    handlereturn() {
+      this.$router.push({ name: "manager" });
     }
   }
 };

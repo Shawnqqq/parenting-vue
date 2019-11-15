@@ -38,6 +38,7 @@
       </el-upload>
       <el-form-item class="warpper">
         <el-button type="primary" @click="handleCreate">添加</el-button>
+        <el-button type="info" @click="handlereturn">返回</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -99,6 +100,9 @@ export default {
         this.$message.error("上传图片大小不能超过 2MB!");
       }
       return isLt2M;
+    },
+    handlereturn() {
+      this.$router.push({ name: "column" });
     }
   }
 };

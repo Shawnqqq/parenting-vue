@@ -1,7 +1,7 @@
 <template>
   <el-tabs class="container" v-model="tableName">
     <el-tab-pane label="合辑编辑" name="first">
-      <el-collapse v-model="activeName" accordion>
+      <el-collapse v-model="activeName">
         <el-collapse-item title="合辑名称" name="1">
           <div class="column-text">
             {{ columnData.title }}
@@ -38,6 +38,7 @@
             :show-file-list="false"
             :http-request="handleEditImage"
             :before-upload="beforeAvatarUpload"
+            style="margin-right:10px"
           >
             编辑
           </el-upload>
@@ -128,7 +129,7 @@ import qiniuService from "@/global/service/qiniu.js";
 export default {
   data() {
     return {
-      activeName: "1",
+      activeName: ["1", "2", "3"],
       tableName: "first",
       columnData: {},
       selectionData: [],

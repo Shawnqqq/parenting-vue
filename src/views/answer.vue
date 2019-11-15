@@ -23,7 +23,7 @@
     </el-input>
     <div class="show-answer">
       <el-table :data="showAnswer" style="width: 100%" class="answer-table">
-        <el-table-column label="展示" width="55">
+        <el-table-column label="精选" width="55">
           <template>
             <i class="el-icon-view" style="padding-left:10px"></i>
           </template>
@@ -53,7 +53,7 @@
       </el-table>
     </div>
     <div class="container-answer">
-      <el-button size="mini" type="success" @click="handleShow">展示</el-button>
+      <el-button size="mini" type="success" @click="handleShow">精选</el-button>
       <el-table
         :data="answerData"
         tooltip-effect="dark"
@@ -129,7 +129,7 @@ export default {
     handleShow() {
       let id = this.$route.params.id;
       if (this.arrayAnswer.length !== 1) {
-        this.$message.error("只能选择一条展示喔");
+        this.$message.error("只能选择一条精选喔");
         return;
       }
       let params = { answer_id: this.arrayAnswer[0].id };
