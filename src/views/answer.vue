@@ -77,6 +77,19 @@
         </el-table-column>
         <el-table-column prop="create_time" label="创建时间" width="110">
         </el-table-column>
+        <el-table-column label="操作" width="100">
+          <template slot-scope="scope">
+            <el-button size="mini" type="text" @click="handleSingle(scope.row)"
+              >详情</el-button
+            >
+            <el-button
+              size="mini"
+              type="text"
+              @click="handleDelete(scope.$index, scope.row)"
+              >删除</el-button
+            >
+          </template>
+        </el-table-column>
       </el-table>
     </div>
   </div>
@@ -139,6 +152,35 @@ export default {
         }
         this.onLoad();
       });
+    },
+    handleSingle(row){
+      let id = row.id;
+      let topic_id = this.tableData[0].id
+      this.$router.push({ name: "answerSingle", params: { id,topic_id} });
+    },
+    handleDelete(index, row) {
+      this.$confirm("此操作将永久删除该回答, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          let id = row.id;
+          answerService.delete(id).then(res => {
+            this.$message({
+              message: res.message
+            });
+            if (res.code === 200) {
+              this.answerData.splice(index, 1);
+            }
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
     }
   }
 };

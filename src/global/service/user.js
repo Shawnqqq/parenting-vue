@@ -16,6 +16,9 @@ const User = {
   },
   info: function(params) {
     return request.get(API.userInfo, params);
+  },
+  more: function(id) {
+    return request.get(API.userSingle(id));
   }
 };
 

@@ -14,7 +14,9 @@ const managerCreate = () =>
   import(/* webpackChunkName: "Manager" */ "@/views/managerCreate"); //管理员添加
 const managerEdit = () =>
   import(/* webpackChunkName: "Manager" */ "@/views/managerEdit"); //管理员编辑
-const user = () => import(/* webpackChunkName: "User" */ "@/views/user"); // 用户统计
+const user = () => import(/* webpackChunkName: "User" */ "@/views/user"); // 用户
+const userSingle = () =>
+  import(/* webpackChunkName: "User" */ "@/views/userSingle"); // 用户详情
 const category = () =>
   import(/* webpackChunkName: "Category" */ "@/views/category"); // 分类管理
 const topic = () => import(/* webpackChunkName: "Topic" */ "@/views/topic"); // 话题管理
@@ -23,6 +25,8 @@ const topicCreate = () =>
 const topicEdit = () =>
   import(/* webpackChunkName: "Topic" */ "@/views/topicEdit"); //话题编辑
 const answer = () => import(/* webpackChunkName: "Answer" */ "@/views/answer"); // 回答管理
+const answerSingle = () =>
+  import(/* webpackChunkName: "Answer" */ "@/views/answerSingle");
 const column = () => import(/* webpackChunkName: "column" */ "@/views/column"); // 合辑管理
 const columnCreate = () =>
   import(/* webpackChunkName: "column" */ "@/views/columnCreate"); // 合辑添加
@@ -50,18 +54,35 @@ export default [
     children: [
       {
         path: "/admin",
-        name: "Dashboard",
-        component: Dashboard,
+        name: "DashboardRoot",
+        component: { render: h => h("router-view") },
+        redirect: { name: "Dashboard" },
         meta: {
           nav: {
             icon: "el-icon-pie-chart",
             title: "概况"
           },
           breadcrumb: {
-            title: "概况",
-            replace: false
+            title: "概况"
           }
-        }
+        },
+        children: [
+          {
+            path: "/admin",
+            name: "Dashboard",
+            component: Dashboard
+          },
+          {
+            path: "/admin/answerSingle",
+            name: "answerSingle",
+            component: answerSingle,
+            meta: {
+              breadcrumb: {
+                title: "详情"
+              }
+            }
+          }
+        ]
       },
       {
         path: "/admin/index",
@@ -210,7 +231,22 @@ export default [
           {
             path: "/admin/topic/answer",
             name: "answer",
-            component: answer
+            component: answer,
+            meta: {
+              breadcrumb: {
+                title: "详情"
+              }
+            }
+          },
+          {
+            path: "/admin/answerSingle",
+            name: "answerSingle",
+            component: answerSingle,
+            meta: {
+              breadcrumb: {
+                title: "回答详情"
+              }
+            }
           }
         ]
       },
@@ -268,13 +304,34 @@ export default [
       {
         path: "/admin/user",
         name: "user",
-        component: user,
+        component: { render: h => h("router-view") },
+        redirect: { name: "user" },
         meta: {
           nav: {
             icon: "el-icon-s-data",
-            title: "用户统计"
+            title: "用户管理"
+          },
+          breadcrumb: {
+            title: "用户管理"
           }
-        }
+        },
+        children: [
+          {
+            path: "/admin/user",
+            name: "user",
+            component: user
+          },
+          {
+            path: "/admin/user/single",
+            name: "userSingle",
+            component: userSingle,
+            meta: {
+              breadcrumb: {
+                title: "详情"
+              }
+            }
+          }
+        ]
       },
       {
         path: "/admin/manager",

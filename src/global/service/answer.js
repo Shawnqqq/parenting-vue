@@ -13,6 +13,12 @@ const Answer = {
   },
   single: function(id) {
     return request.get(API.answerItem(id));
+  },
+  today: function() {
+    return request.get(API.answerToday);
+  },
+  answerSingle: function(id) {
+    return request.get(API.answerSingle(id));
   }
 };
 

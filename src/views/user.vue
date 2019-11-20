@@ -2,9 +2,8 @@
   <el-tabs class="container" v-model="activeName">
     <el-tab-pane label="用户管理" name="user">
       <el-table :data="tableData" style="width: 100%">
-        <el-table-column prop="nick_name" label="昵称" width="180">
-        </el-table-column>
-        <el-table-column prop="sex" label="性别" width="180">
+        <el-table-column prop="nick_name" label="昵称"> </el-table-column>
+        <el-table-column prop="sex" label="性别">
           <template slot-scope="scope">
             <el-tag
               :type="scope.row.sex === '男' ? 'primary' : 'warning'"
@@ -20,6 +19,13 @@
               :type="scope.row.state === '无' ? 'primary' : 'warning'"
               disable-transitions
               >{{ scope.row.state }}</el-tag
+            >
+          </template>
+        </el-table-column>
+        <el-table-column fixed="right" label="操作" width="100">
+          <template slot-scope="scope">
+            <el-button @click="handleClick(scope.row)" type="text" size="small"
+              >查看</el-button
             >
           </template>
         </el-table-column>
@@ -44,10 +50,6 @@ import userService from "@/global/service/user.js";
 export default {
   data() {
     return {
-      total: 0,
-      female: 0,
-      pregnant: 0,
-      bred: 0,
       activeName: "user",
       pagination: {
         pageSize: 10,
@@ -58,12 +60,6 @@ export default {
     };
   },
   created() {
-    userService.list().then(res => {
-      this.total = res.data.total;
-      this.female = res.data.female;
-      this.pregnant = res.data.pregnant;
-      this.bred = res.data.bred;
-    });
     this.onLoad();
   },
   methods: {
@@ -100,6 +96,10 @@ export default {
         this.tableData = res.data;
         this.pagination.total = res.total;
       });
+    },
+    handleClick(row) {
+      let id = row.id;
+      this.$router.push({ name: "userSingle", params: { id } });
     }
   }
 };
