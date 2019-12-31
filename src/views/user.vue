@@ -77,6 +77,8 @@ export default {
             case 2:
               data.sex = "女";
               break;
+            default:
+              data.sex = "未设置";
           }
           switch (Number(data.state)) {
             case 0:
