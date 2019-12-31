@@ -20,7 +20,9 @@
     </div>
     <div class="btn-container">
       <el-button type="info" plain @click="handlereturn()">返回</el-button>
-      <el-button type="danger" plain @click="handleDelete(answerData.id)">删除</el-button>
+      <el-button type="danger" plain @click="handleDelete(answerData.id)"
+        >删除</el-button
+      >
     </div>
   </div>
 </template>
@@ -68,19 +70,19 @@ export default {
     let id = this.$route.params.id;
     answerService.answerSingle(id).then(res => {
       this.answerData = res.data;
-      this.content = res.data.text
+      this.content = res.data.text;
     });
   },
-  methods:{
-    handlereturn(){
-      let params = this.$route.params
-      if(params.topic_id){
-        this.$router.push({ name: "answer", params: { id:params.topic_id } });
-      }else{
-        this.$router.back()
+  methods: {
+    handlereturn() {
+      let params = this.$route.params;
+      if (params.topic_id) {
+        this.$router.push({ name: "answer", params: { id: params.topic_id } });
+      } else {
+        this.$router.back();
       }
     },
-    handleDelete(id){
+    handleDelete(id) {
       this.$confirm("此操作将永久删除该回答, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -92,7 +94,7 @@ export default {
               message: res.message
             });
             if (res.code === 200) {
-              this.$router.back()
+              this.$router.back();
             }
           });
         })
@@ -128,11 +130,11 @@ export default {
   padding: 10px 0;
 }
 .box-card {
-  width:47%;
+  width: 47%;
   height: 400px;
   box-shadow: 1px 1px 10px rgba(153, 153, 153, 0.1);
 }
-.btn-container{
+.btn-container {
   display: flex;
   justify-content: space-between;
   margin: 30px 0 10px 0;

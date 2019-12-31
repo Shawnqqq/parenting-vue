@@ -43,7 +43,7 @@ import BasicLayout from "@/components/BasicLayout";
 
 export default [
   {
-    path: "/login",
+    path: "/",
     component: AccountLogin,
     name: "login"
   },

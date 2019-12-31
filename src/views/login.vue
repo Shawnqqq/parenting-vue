@@ -1,42 +1,15 @@
 <template>
-  <div class="wrapper">
-    <div class="login-logo">
-      <img class="login-logo-image" src="~@/assets/logo.png" />
-      <span class="logon-logo-info">Login</span>
+  <div class="container">
+    <div class="login">
+      <h1>login</h1>
+      <form>
+        <input type="text" placeholder="Username" v-model="phone" />
+        <input type="password" placeholder="Password" v-model="password" />
+        <button type="button" class="submit-btn" @click="handSubmit">
+          Let me in.
+        </button>
+      </form>
     </div>
-    <el-form
-      class="login-from"
-      :model="passwordFrom"
-      status-icon
-      :rules="passwordRules"
-      ref="passwordFrom"
-      label-width="70px"
-    >
-      <el-form-item label="手机号" prop="phone">
-        <el-input
-          type="text"
-          prefix-icon="el-icon-mobile-phone"
-          v-model="passwordFrom.phone"
-          autocomplete="off"
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="密码" prop="password">
-        <el-input
-          type="password"
-          prefix-icon="el-icon-lock"
-          v-model="passwordFrom.password"
-          autocomplete="off"
-        ></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button
-          type="primary"
-          style="width: 100%"
-          @click="submitForm('passwordFrom')"
-          >提交</el-button
-        >
-      </el-form-item>
-    </el-form>
   </div>
 </template>
 
@@ -47,31 +20,8 @@ import DataStore from "@/global/storage/index.js";
 export default {
   data() {
     return {
-      passwordFrom: {
-        password: "",
-        phone: ""
-      },
-      passwordRules: {
-        phone: [
-          {
-            required: true,
-            message: "请输入手机号",
-            trigger: "blur"
-          },
-          {
-            pattern: /^1[3456789]\d{9}$/,
-            message: "目前只支持中国大陆的手机号码",
-            trigger: "blur"
-          }
-        ],
-        password: [
-          {
-            required: true,
-            message: "请输入密码",
-            trigger: "blur"
-          }
-        ]
-      }
+      password: "",
+      phone: ""
     };
   },
   created: function() {
@@ -81,22 +31,23 @@ export default {
     }
   },
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          let data = {
-            phone: this.passwordFrom.phone,
-            password: this.passwordFrom.password
-          };
-          managerService.login(data).then(res => {
-            if (res.code !== 200) {
-              this.$message.error(res.message);
-            } else {
-              DataStore.setToken(res.token);
-              DataStore.setName(res.name);
-              this.$router.replace({ name: "manager" });
-            }
-          });
+    handSubmit() {
+      let phone = this.phone;
+      let password = this.password;
+      if (!phone || !password) {
+        return this.$message.error("请输入手机号和密码");
+      }
+      let data = {
+        phone: this.phone,
+        password: this.password
+      };
+      managerService.login(data).then(res => {
+        if (res.code !== 200) {
+          this.$message.error(res.message);
+        } else {
+          DataStore.setToken(res.token);
+          DataStore.setName(res.name);
+          this.$router.replace({ name: "manager" });
         }
       });
     }
@@ -104,23 +55,67 @@ export default {
 };
 </script>
 
-<style scoped>
-.wrapper {
-  width: 500px;
-  display: flex;
-  flex-direction: column;
-  margin: auto;
+<style lang="less" scoped>
+.container {
+  width: 100%;
+  height: 100%;
+  background: -webkit-radial-gradient(
+      0% 100%,
+      ellipse cover,
+      rgba(104, 128, 138, 0.4) 10%,
+      rgba(138, 114, 76, 0) 40%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(57, 173, 219, 0.25) 0%,
+      rgba(42, 60, 87, 0.4) 100%
+    ),
+    linear-gradient(135deg, #670d10 0%, #092756 100%);
+  position: relative;
 }
-.login-logo {
-  display: flex;
-  flex-direction: column;
+.login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
   width: 300px;
-  margin: 100px auto 50px auto;
-  align-items: center;
-  font-size: 25px;
-  color: #777;
-}
-.login-from {
-  margin-right: 82px;
+  height: 300px;
+  transform: translateX(-50%) translateY(-50%);
+  h1 {
+    color: #fff;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    letter-spacing: 1px;
+    text-align: center;
+    margin: 30px 0;
+  }
+  input {
+    width: 100%;
+    margin-bottom: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    outline: none;
+    padding: 10px;
+    font-size: 13px;
+    color: #fff;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    box-shadow: inset 0 -5px 45px rgba(100, 100, 100, 0.2),
+      0 1px 1px rgba(255, 255, 255, 0.2);
+    transition: box-shadow 0.5s ease;
+  }
+  .submit-btn {
+    width: 100%;
+    background-color: #4c71bb;
+    background-image: -webkit-linear-gradient(top, #6eb6de, #4a77d4);
+    background-repeat: repeat-x;
+    border: 1px solid #3762bc;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2),
+      0 1px 2px rgba(0, 0, 0, 0.5);
+    padding: 9px 14px;
+    font-size: 15px;
+    color: #fff;
+    line-height: normal;
+    border-radius: 5px;
+  }
 }
 </style>

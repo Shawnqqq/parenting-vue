@@ -153,10 +153,10 @@ export default {
         this.onLoad();
       });
     },
-    handleSingle(row){
+    handleSingle(row) {
       let id = row.id;
-      let topic_id = this.tableData[0].id
-      this.$router.push({ name: "answerSingle", params: { id,topic_id} });
+      let topic_id = this.tableData[0].id;
+      this.$router.push({ name: "answerSingle", params: { id, topic_id } });
     },
     handleDelete(index, row) {
       this.$confirm("此操作将永久删除该回答, 是否继续?", "提示", {
